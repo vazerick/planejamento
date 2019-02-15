@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<!--Criacao: Fri Feb 15 00:08:12 2019-->
+<lista>
+   <limite>546.0</limite>
+   <item id="0">
+      <nome>teste</nome>
+      <prioridade>4</prioridade>
+      <preco>12.27</preco>
+      <prestacao>1</prestacao>
+      <comentario></comentario>
+   </item>
+   <item id="1">
+      <nome>teste2</nome>
+      <prioridade>2</prioridade>
+      <preco>12.27</preco>
+      <prestacao>1</prestacao>
+      <comentario></comentario>
+   </item>
+   <item id="3">
+      <nome>Panelas</nome>
+      <prioridade>1</prioridade>
+      <preco>30.0</preco>
+      <prestacao>2</prestacao>
+      <comentario></comentario>
+   </item>
+   <item id="4">
+      <nome>Test</nome>
+      <prioridade>54</prioridade>
+      <preco>1355.45</preco>
+      <prestacao>12</prestacao>
+      <comentario></comentario>
+   </item>
+   <item id="5">
+      <nome>TesteNovo</nome>
+      <prioridade>54</prioridade>
+      <preco>112.0</preco>
+      <prestacao>12</prestacao>
+      <comentario></comentario>
+   </item>
+   <item id="6">
+      <nome>Teste6</nome>
+      <prioridade>1</prioridade>
+      <preco>1.0</preco>
+      <prestacao>1</prestacao>
+      <comentario></comentario>
+   </item>
+   <item id="7">
+      <nome>Teste7</nome>
+      <prioridade>7</prioridade>
+      <preco>7.0</preco>
+      <prestacao>7</prestacao>
+      <comentario></comentario>
+   </item>
+</lista>
