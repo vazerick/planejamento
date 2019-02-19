@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -17,6 +17,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.treeItens = QtWidgets.QTreeWidget(self.centralwidget)
         self.treeItens.setGeometry(QtCore.QRect(60, 300, 391, 341))
+        self.treeItens.setAlternatingRowColors(True)
         self.treeItens.setObjectName("treeItens")
         item_0 = QtWidgets.QTreeWidgetItem(self.treeItens)
         item_1 = QtWidgets.QTreeWidgetItem(item_0)
@@ -49,6 +50,7 @@ class Ui_MainWindow(object):
         self.lineAddNome.setObjectName("lineAddNome")
         self.spinAddPrioridade = QtWidgets.QSpinBox(self.pageAdd)
         self.spinAddPrioridade.setGeometry(QtCore.QRect(270, 90, 51, 26))
+        self.spinAddPrioridade.setButtonSymbols(QtWidgets.QAbstractSpinBox.UpDownArrows)
         self.spinAddPrioridade.setObjectName("spinAddPrioridade")
         self.label_13 = QtWidgets.QLabel(self.pageAdd)
         self.label_13.setGeometry(QtCore.QRect(10, 10, 54, 17))
@@ -132,7 +134,10 @@ class Ui_MainWindow(object):
         self.labelPrioridade.setObjectName("labelPrioridade")
         self.listItens = QtWidgets.QTreeWidget(self.pagePrioridade)
         self.listItens.setGeometry(QtCore.QRect(10, 10, 231, 171))
+        self.listItens.setLineWidth(0)
         self.listItens.setAlternatingRowColors(False)
+        self.listItens.setRootIsDecorated(False)
+        self.listItens.setItemsExpandable(False)
         self.listItens.setObjectName("listItens")
         self.listItens.header().setVisible(False)
         self.buttonPrioridadeSalvar = QtWidgets.QPushButton(self.pagePrioridade)
@@ -182,8 +187,8 @@ class Ui_MainWindow(object):
         self.treeResultado.setMidLineWidth(0)
         self.treeResultado.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.treeResultado.setProperty("showDropIndicator", True)
-        self.treeResultado.setAlternatingRowColors(False)
-        self.treeResultado.setSelectionMode(QtWidgets.QAbstractItemView.NoSelection)
+        self.treeResultado.setAlternatingRowColors(True)
+        self.treeResultado.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.treeResultado.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.treeResultado.setTextElideMode(QtCore.Qt.ElideNone)
         self.treeResultado.setIndentation(20)
@@ -207,7 +212,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.lineNome, self.spinPreco)
         MainWindow.setTabOrder(self.spinPreco, self.spinPrestacoes)

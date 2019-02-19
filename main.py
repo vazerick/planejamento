@@ -1,5 +1,6 @@
 import sys
 import sass
+import time
 
 # import do PyQt5
 
@@ -13,12 +14,19 @@ from src.gui import gui
 from src.lista import Lista
 from src.prioridade import Prioridade
 from src.arvore import Arvore, ArvoreItens, ArvoreResultado
+from src.resultado import Resultado
 
 
 def atualiza():
     Prioridades.atualiza()
     ArvoreItens.atualiza()
+    Resultado.atualiza(Lista.limite, Prioridades.ordem)
+    ArvoreResultado.atualiza()
 
+
+def botao_ok():
+    Gui.wOk.hide()
+    Gui.ui.lineAddNome.setFocus()
 
 def botao_adicionar():
     Gui.ui.stackedWidget.setCurrentIndex(1)
@@ -46,6 +54,15 @@ def botao_adicionar_adicionar():
             ui=Gui.uiOk,
             janela=Gui.wOk
         )
+    limpar = [
+        Gui.ui.lineAddNome,
+        Gui.ui.spinAddPreco,
+        Gui.ui.spinAddPrestacoes,
+        Gui.ui.spinAddPrioridade,
+        Gui.ui.textAddComentarios
+    ]
+    for item in limpar:
+        item.clear()
 
 
 def botao_adicionar_cancelar():
@@ -61,8 +78,8 @@ def botao_excluir():
     selecionado = Gui.ui.treeItens.currentIndex()
     pai = selecionado.parent().row()
     filho = selecionado.row()
-    id = Prioridades.ordem[pai][filho]["id"]
-    Lista.excluir(Lista.lista[id])
+    id = Prioridades.ordem[pai]['itens'][filho]["id"]
+    Lista.excluir(id)
     atualiza()
     Gui.wExcluir.hide()
 
@@ -78,6 +95,42 @@ def mensagem(titulo, mensagem, ui, janela):
     janela.show()
 
 
+def botao_salvar():
+    print("salvar")
+    item = Gui.ui.treeItens.currentIndex()
+    pai = item.parent().row()
+    filho = item.row()
+    selecionado = Prioridades.ordem[pai]['itens'][filho]
+    print(selecionado['id'])
+
+    dados = {
+        'nome': "Nome",
+        'prioridade': 0,
+        'preco': 0,
+        'prestacao': 0,
+        'comentario': "Comentario"
+    }
+
+    print(dados)
+
+    Lista.edita(
+        id=selecionado['id'],
+        nome=Gui.ui.lineNome.text(),
+        prioridade=Gui.ui.spinPrioridade.value(),
+        preco=Gui.ui.spinPreco.value(),
+        prestacao=Gui.ui.spinPrestacoes.value(),
+        comentario=Gui.ui.textComentarios.toPlainText()
+    )
+    atualiza()
+
+def botao_prioridade_salvar():
+    print("salvar")
+    item = Gui.ui.treeItens.currentIndex().row()
+    Prioridades.ordem[item]['espera'] = Gui.ui.spinEspera.value()
+    Lista.atualiza_prioridade(Prioridades.ordem)
+    atualiza()
+
+
 def getArvoreItem(item):
     pai = item.parent().row()
     if pai < 0:
@@ -86,7 +139,7 @@ def getArvoreItem(item):
         lerPrioridade(selecionado)
     else:
         filho = item.row()
-        selecionado = Prioridades.ordem[pai][filho]
+        selecionado = Prioridades.ordem[pai]['itens'][filho]
         print(selecionado)
         lerItemEditar(selecionado)
 
@@ -94,8 +147,9 @@ def getArvoreItem(item):
 def lerPrioridade(prioridade):
     Gui.ui.listItens.clear()
     Gui.ui.stackedWidget.setCurrentIndex(3)
-    Gui.ui.labelPrioridade.setText(str(prioridade[0]["prioridade"]))
-    for item in prioridade:
+    Gui.ui.labelPrioridade.setText(str(prioridade['itens'][0]["prioridade"]))
+    Gui.ui.spinEspera.setValue(int(prioridade['espera']))
+    for item in prioridade['itens']:
         linha = [item["nome"]]
         WidgetItem = QTreeWidgetItem(linha)
         child = [
@@ -144,6 +198,8 @@ Gui.ui.buttonAdicionar.clicked.connect(botao_adicionar)
 Gui.ui.buttonAddAdicionar.clicked.connect(botao_adicionar_adicionar)
 Gui.ui.buttonCancelar.clicked.connect(botao_adicionar_cancelar)
 Gui.ui.buttonDesfazer.clicked.connect(botao_desfazer)
+Gui.ui.buttonSalvar.clicked.connect(botao_salvar)
+Gui.ui.buttonPrioridadeSalvar.clicked.connect(botao_prioridade_salvar)
 Gui.ui.buttonExcluir.clicked.connect(lambda: mensagem(
     titulo="Excluir item?",
     mensagem="Tem certeza que deseja excluir " + Gui.ui.lineNome.text() + "?\n Essa ação não poderá ser desfeita",
@@ -152,7 +208,7 @@ Gui.ui.buttonExcluir.clicked.connect(lambda: mensagem(
 ))
 
 
-Gui.uiOk.pushButton.clicked.connect(Gui.wOk.hide)
+Gui.uiOk.pushButton.clicked.connect(botao_ok)
 Gui.uiExcluir.buttonBox.rejected.connect(Gui.wExcluir.hide)
 Gui.uiExcluir.buttonBox.accepted.connect(botao_excluir)
 
@@ -160,7 +216,17 @@ Gui.ui.treeItens.clicked.connect(getArvoreItem)
 
 Gui.ui.spinLimite.editingFinished.connect(muda_limite)
 
+Gui.ui.comboMes.setCurrentIndex(
+    time.localtime(time.time()).tm_mon-1
+)
+
 Lista.salva()
+
+Resultado = Resultado(Lista.limite, Prioridades.ordem)
+ArvoreResultado = ArvoreResultado(Gui.ui.treeResultado, Resultado, Lista.limite, Gui.ui.comboMes.currentIndex())
+
+
+
 
 sys.exit(Gui.app.exec_())
 

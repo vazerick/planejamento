@@ -1,54 +1,143 @@
 <?xml version="1.0" ?>
-<!--Criacao: Fri Feb 15 00:08:12 2019-->
-<lista>
-   <limite>546.0</limite>
-   <item id="0">
-      <nome>teste</nome>
-      <prioridade>4</prioridade>
-      <preco>12.27</preco>
-      <prestacao>1</prestacao>
-      <comentario></comentario>
-   </item>
-   <item id="1">
-      <nome>teste2</nome>
-      <prioridade>2</prioridade>
-      <preco>12.27</preco>
-      <prestacao>1</prestacao>
-      <comentario></comentario>
-   </item>
-   <item id="3">
-      <nome>Panelas</nome>
-      <prioridade>1</prioridade>
-      <preco>30.0</preco>
-      <prestacao>2</prestacao>
-      <comentario></comentario>
-   </item>
-   <item id="4">
-      <nome>Test</nome>
-      <prioridade>54</prioridade>
-      <preco>1355.45</preco>
-      <prestacao>12</prestacao>
-      <comentario></comentario>
-   </item>
-   <item id="5">
-      <nome>TesteNovo</nome>
-      <prioridade>54</prioridade>
-      <preco>112.0</preco>
-      <prestacao>12</prestacao>
-      <comentario></comentario>
-   </item>
-   <item id="6">
-      <nome>Teste6</nome>
-      <prioridade>1</prioridade>
-      <preco>1.0</preco>
-      <prestacao>1</prestacao>
-      <comentario></comentario>
-   </item>
-   <item id="7">
-      <nome>Teste7</nome>
-      <prioridade>7</prioridade>
-      <preco>7.0</preco>
-      <prestacao>7</prestacao>
-      <comentario></comentario>
-   </item>
-</lista>
+<!--Criacao: Tue Feb 19 20:55:50 2019-->
+<planejamento>
+   <limite>750.0</limite>
+   <prioridades>
+      <prioridade num="1">
+         <espera>0</espera>
+      </prioridade>
+      <prioridade num="2">
+         <espera>0</espera>
+      </prioridade>
+      <prioridade num="3">
+         <espera>0</espera>
+      </prioridade>
+      <prioridade num="4">
+         <espera>1</espera>
+      </prioridade>
+      <prioridade num="5">
+         <espera>0</espera>
+      </prioridade>
+   </prioridades>
+   <lista>
+      <item id="0">
+         <nome>Dívidas</nome>
+         <prioridade>1</prioridade>
+         <preco>1172.4</preco>
+         <prestacao>4</prestacao>
+         <comentario>Dívidas com o pai</comentario>
+      </item>
+      <item id="1">
+         <nome>Panelas</nome>
+         <prioridade>1</prioridade>
+         <preco>432.84</preco>
+         <prestacao>10</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="2">
+         <nome>Aspirador de pó</nome>
+         <prioridade>1</prioridade>
+         <preco>170.0</preco>
+         <prestacao>3</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="3">
+         <nome>Mop</nome>
+         <prioridade>1</prioridade>
+         <preco>100.0</preco>
+         <prestacao>2</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="4">
+         <nome>Jogo de Faca</nome>
+         <prioridade>1</prioridade>
+         <preco>50.0</preco>
+         <prestacao>1</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="5">
+         <nome>Escorredor de Louça</nome>
+         <prioridade>2</prioridade>
+         <preco>50.0</preco>
+         <prestacao>1</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="6">
+         <nome>Forma de lasanha</nome>
+         <prioridade>2</prioridade>
+         <preco>50.0</preco>
+         <prestacao>1</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="7">
+         <nome>Ralador</nome>
+         <prioridade>1</prioridade>
+         <preco>30.0</preco>
+         <prestacao>1</prestacao>
+         <comentario>Daqueles que fica de pé</comentario>
+      </item>
+      <item id="8">
+         <nome>Celular</nome>
+         <prioridade>1</prioridade>
+         <preco>600.0</preco>
+         <prestacao>10</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="9">
+         <nome>Torneira Elétrica</nome>
+         <prioridade>2</prioridade>
+         <preco>150.0</preco>
+         <prestacao>2</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="10">
+         <nome>Potinhos de Tempeiro</nome>
+         <prioridade>5</prioridade>
+         <preco>100.0</preco>
+         <prestacao>2</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="11">
+         <nome>Lixeira Grande</nome>
+         <prioridade>3</prioridade>
+         <preco>50.0</preco>
+         <prestacao>1</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="12">
+         <nome>Mesa de Computador</nome>
+         <prioridade>3</prioridade>
+         <preco>300.0</preco>
+         <prestacao>3</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="13">
+         <nome>Braço de Monitor</nome>
+         <prioridade>5</prioridade>
+         <preco>150.0</preco>
+         <prestacao>2</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="14">
+         <nome>Rotulador</nome>
+         <prioridade>5</prioridade>
+         <preco>100.0</preco>
+         <prestacao>2</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="15">
+         <nome>Frigideira de Ferro</nome>
+         <prioridade>2</prioridade>
+         <preco>150.0</preco>
+         <prestacao>3</prestacao>
+         <comentario></comentario>
+      </item>
+      <item id="16">
+         <nome>Computador Novo</nome>
+         <prioridade>4</prioridade>
+         <preco>2500.0</preco>
+         <prestacao>10</prestacao>
+         <comentario></comentario>
+      </item>
+   </lista>
+</planejamento>
