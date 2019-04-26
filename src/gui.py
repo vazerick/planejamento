@@ -4,8 +4,7 @@ import sass
 # import do PyQt5
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import Qt, QDate
+from PyQt5.QtCore import Qt
 
 # import das janelas
 
@@ -13,11 +12,13 @@ from ui.main import Ui_MainWindow as Main
 from ui.excluir import Ui_Form as Excluir
 from ui.sucesso import Ui_Form as Ok
 from ui.tempo import Ui_Form as Tempo
+from ui.grafico import Ui_Form as Grafico
 
 class gui:
 
     def __init__(self):
 # declarações da interface gráfica
+        print("Gerando a interface gráfica")
 
         self.app = QApplication(sys.argv)
 
@@ -25,7 +26,10 @@ class gui:
         self.wMain = QMainWindow()
         self.ui = Main()
         self.ui.setupUi(self.wMain)
-
+        
+        self.wGrafico = QDialog()
+        self.uiGrafico = Grafico()
+        self.uiGrafico.setupUi(self.wGrafico)
 
         self.wTempo = QDialog()
         self.uiTempo = Tempo()
@@ -53,7 +57,7 @@ class gui:
 
 
         tema = sass.compile(filename="ui/style.scss")
-
+        print("Gera o tema", tema)
 
         self.wMain.setStyleSheet(tema)
         self.wMain.show()
@@ -64,7 +68,8 @@ class gui:
             self.wExcluir,
             self.wOk,
             self.wTempo,
-            self.wTempoPrioridade
+            self.wTempoPrioridade,
+            self.wGrafico
         ]:
             janela.setStyleSheet(tema)
             janela.setWindowModality(Qt.ApplicationModal)

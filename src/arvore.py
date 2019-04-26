@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QTreeWidget, QTreeWidgetItem, QApplication, QWidget
 from PyQt5.QtCore import Qt
-
+import pandas as pd
+import matplotlib.pyplot as plt
 
 
 class Arvore:
@@ -26,17 +27,14 @@ class Arvore:
     def adicionou(self):
         self.atualiza()
         self.Widget.expandAll()
-        print()
 
 
 class ArvoreItens(Arvore):
 
     def atualiza(self):
-        print("Arvore:")
         self.Widget.clear()
         for colecao in self.Itens.ordem:
             linha = ["Prioridade " + str(colecao['itens'][0]['prioridade'])]
-            print("Espera:",self.ajeitaMes(colecao['espera']))
             linha.append(self.ajeitaMes(int(colecao['espera'])))
 
             WidgetItem = QTreeWidgetItem(linha)
@@ -58,11 +56,11 @@ class ArvoreTempoBase(Arvore):
 
     def atualiza(self):
 
-        print("Arvore:")
+
         self.Widget.clear()
         for colecao in self.Itens.ordem:
             linha = ["Prioridade " + str(colecao['itens'][0]['prioridade'])]
-            print("Espera:", self.ajeitaMes(colecao['espera']))
+
             linha.append(self.ajeitaMes(int(colecao['espera'])))
 
             WidgetItem = QTreeWidgetItem(linha)
@@ -98,7 +96,7 @@ class ArvoreTempoBase(Arvore):
         #         child.setCheckState(0, Qt.Unchecked)
 
     def ler(self):
-
+        print("Lê item da árvore")
         selecionadas = []
 
         raiz = self.Widget.invisibleRootItem()
@@ -107,12 +105,10 @@ class ArvoreTempoBase(Arvore):
         for i in range(cont_prior):
             prioridade = raiz.child(i)
             cont_item = prioridade.childCount()
-            print("Estado da prioridade:", prioridade.checkState(0))
             if prioridade.checkState(0):
                 for z in range(cont_item):
                     item = prioridade.child(z)
-                    print("Estado do item:", item.checkState(0))
-                    print("Teste:", i,"-",z)
+
 
                     if item.checkState(0):
                         selecionadas.append(
@@ -140,6 +136,8 @@ class ArvoreTempoBase(Arvore):
 class ArvoreResultado():
 
     alerta = []
+    x = []
+    y = []
 
     def __init__(self, Widget, Itens, Limite, Inicio):
 
@@ -157,6 +155,9 @@ class ArvoreResultado():
         self.Limite = Limite
 
         self.alerta = []
+
+        self.y.clear()
+        self.x.clear()
 
         prioridades = []
 
@@ -176,6 +177,7 @@ class ArvoreResultado():
         ]
 
         self.Widget.clear()
+        plt.close('all')
 
         for mes in self.Itens.Lista:
             for item in mes:
@@ -224,15 +226,28 @@ class ArvoreResultado():
                     WidgetItem.addChild(WidgetChild)
             WidgetItem.setText(1, self.dinheiro(soma_mes))
             WidgetItem.setText(2, self.percentual(soma_mes/float(self.Limite)))
+            self.y.append(soma_mes/float(self.Limite)*100)
+            self.x.append(self.grafico_mes(self.x, meses[mes_num]))
             if soma_mes > float(self.Limite):
                 self.alerta.append(meses[mes_num])
             self.Widget.addTopLevelItem(WidgetItem)
         self.Widget.expandAll()
-        print("Inicio:",self.Inicio)
 
     def dinheiro(self, num):
         return str("R${:.2f}".format(num))
 
     def percentual(self, num):
         return str(round(num*100))+"%"
+
+    def grafico_mes(self, x, mes):
+        cont = 1
+        rotulo = self.rotular(mes, cont)
+        while rotulo in x:
+            cont = cont + 1
+            rotulo = self.rotular(mes, cont)
+        return rotulo
+
+    def rotular(self, mes, cont):
+        return mes + "/" + str(cont)
+
 

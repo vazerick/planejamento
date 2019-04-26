@@ -13,6 +13,7 @@ class Lista:
 
     def __init__(self, nome):
         self.endereco = "data/" + nome + ".xml"
+        print("Abre lista ", self.endereco)
 
         # try:
         #     self.tabela = pd.read_csv(self.endereco, quotechar="'", index_col='id')
@@ -73,35 +74,31 @@ class Lista:
                 }
             )
 
-        print(self.espera)
 
     def atualiza_prioridade(self, prioridades):
-        print(prioridades)
+        print("Atualiza prioridade", prioridades)
         self.espera = []
         for item in prioridades:
             self.espera.append({
                 'prioridade': item['prioridade'],
                 'espera': item['espera']
             })
-        print(self.espera)
         self.salva()
 
     def excluir(self, id):
+        print("Exlui idem ", id)
         for item in self.lista:
             if item['id']==id:
                 self.lista.remove(item)
         self.salva()
 
     def adiciona(self, add):
+        print("Adiciona ", add)
         maior = 0
         for item in self.lista:
-            print(item)
             if item["id"] >= maior:
                 maior = item["id"]+1
-                print("Id:",item["id"])
-                print("Maior:", maior)
         add['id'] = maior
-        print("Add:",add)
         self.lista.append(add)
         self.salva()
 
@@ -111,6 +108,7 @@ class Lista:
               preco,
               prestacao,
               comentario):
+        print("Edita ", id)
         for item in self.lista:
             if item['id'] == id:
                 item['nome'] = nome
@@ -118,10 +116,10 @@ class Lista:
                 item['preco'] = float(preco)
                 item['prestacao'] = int(prestacao)
                 item['comentario'] = comentario
-                print(item)
         self.salva()
 
     def passa_tempo(self, id):
+        print("Reduz prestação de ", id)
         for item in self.lista:
             if item['id'] == id:
                 if item['prestacao'] > 1:
@@ -134,6 +132,7 @@ class Lista:
                     self.lista.remove(item)
 
     def reduz_prioridade(self, id):
+        print("Reduz prioridade de ", id)
         for item in self.lista:
             if item['id'] == id:
                 if item['prioridade'] > 1:
@@ -143,6 +142,7 @@ class Lista:
 
 
     def salva(self):
+        print("Salva o arquivo ", self.endereco)
         doc = minidom.Document()  # cria um objeto xml
         # adiciona um comentário com o horário de criação
         doc.appendChild(doc.createComment("Criacao: %s" % time.asctime(time.localtime(time.time()))))

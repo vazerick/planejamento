@@ -36,5 +36,4 @@ class Prioridade:
                 "espera": espera,
                 "itens": colecao
             })
-        print(self.ordem)
 

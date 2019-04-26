@@ -39,7 +39,6 @@ class Resultado:
             for item in prioridade['itens']:
                 preco = item['preco'] / item['prestacao']
                 for cont in range(0, item['prestacao']):
-                    print("Meses:\n"+"Tamanho:",len(Meses),"Mês:",mes_inicial + cont)
                     Meses[mes_inicial + cont].append([{
                         'nome': item['nome'],
                         'prioridade': item['prioridade'],
@@ -48,8 +47,6 @@ class Resultado:
                     }])
 
         self.Lista = Meses
-        for item in self.Lista:
-            print(item)
 
 
 

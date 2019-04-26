@@ -1,29 +1,31 @@
 import sys
-import sass
 import time
-
+import os
 # import do PyQt5
 
-from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow
-from PyQt5 import QtCore, QtWidgets, QtGui
-from PyQt5.QtCore import Qt, QDate
-from PyQt5.QtWidgets import QTreeWidget, QTreeWidgetItem, QApplication, QWidget
+
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QTreeWidgetItem
 
 
 from src.gui import gui
 from src.lista import Lista
 from src.prioridade import Prioridade
-from src.arvore import Arvore, ArvoreItens, ArvoreTempoBase, ArvoreResultado
+from src.arvore import ArvoreItens, ArvoreTempoBase, ArvoreResultado
 from src.resultado import Resultado
 
+os.chdir("/home/vazerick/PycharmProjects/planejamento")
+print("Diretório:", os.getcwd())
 
 def atualiza():
+    print("Atualiza listas")
     Prioridades.atualiza()
     ArvorePrioridades.atualiza()
     Resultado.atualiza(Lista.limite, Prioridades.ordem)
     ArvoreResultado.atualiza(Lista.limite)
     ArvoreTempo.atualiza()
     ArvoreTempoPrioridade.atualiza()
+    Gui.uiGrafico.widget.plot(ArvoreResultado.x, ArvoreResultado.y)
     confere_limite()
 
 
@@ -34,10 +36,8 @@ def botao_ok():
 
 def botao_tempo_ok():
     selecionados = ArvoreTempoBase.ler()
-    print(selecionados)
     for item in selecionados:
         id = Prioridades.ordem[item['prioridade']]['itens'][item['item']]['id']
-        print(id)
         Lista.passa_tempo(id)
     Lista.salva()
     atualiza()
@@ -45,10 +45,9 @@ def botao_tempo_ok():
 
 def botao_tempoprioridade_ok():
     selecionados = ArvoreTempoPrioridade.ler()
-    print(selecionados)
+
     for item in selecionados:
         id = Prioridades.ordem[item['prioridade']]['itens'][item['item']]['id']
-        print(id)
         Lista.reduz_prioridade(id)
     Lista.salva()
     atualiza()
@@ -66,7 +65,7 @@ def botao_adicionar_adicionar():
     prestacao = Gui.ui.spinAddPrestacoes.value()
     prioridade = Gui.ui.spinAddPrioridade.value()
     comentario = Gui.ui.textAddComentarios.toPlainText()
-    print(nome, preco, prestacao, prioridade, comentario)
+
     if nome!="" and prestacao > 0 and preco > 0 and prioridade > 0:
         Lista.adiciona({
             "nome": nome,
@@ -116,6 +115,9 @@ def botao_desfazer():
     Gui.ui.stackedWidget.setCurrentIndex(0)
 
 
+def botao_grafico():
+    Gui.wGrafico.show()
+
 
 def mensagem(titulo, mensagem, ui, janela):
     ui.labelTitulo.setText(titulo)
@@ -141,12 +143,10 @@ def botao_tempoprioridade():
 
 
 def botao_salvar():
-    print("salvar")
     item = Gui.ui.treeItens.currentIndex()
     pai = item.parent().row()
     filho = item.row()
     selecionado = Prioridades.ordem[pai]['itens'][filho]
-    print(selecionado['id'])
 
     dados = {
         'nome': "Nome",
@@ -156,7 +156,6 @@ def botao_salvar():
         'comentario': "Comentario"
     }
 
-    print(dados)
 
     Lista.edita(
         id=selecionado['id'],
@@ -169,7 +168,6 @@ def botao_salvar():
     atualiza()
 
 def botao_prioridade_salvar():
-    print("salvar")
     item = Gui.ui.treeItens.currentIndex().row()
     Prioridades.ordem[item]['espera'] = Gui.ui.spinEspera.value()
     Lista.atualiza_prioridade(Prioridades.ordem)
@@ -177,6 +175,7 @@ def botao_prioridade_salvar():
 
 
 def getArvoreItem(item):
+    print("Lê item", item)
     pai = item.parent().row()
     if pai < 0:
         pai = item.row()
@@ -185,11 +184,11 @@ def getArvoreItem(item):
     else:
         filho = item.row()
         selecionado = Prioridades.ordem[pai]['itens'][filho]
-        print(selecionado)
         lerItemEditar(selecionado)
 
 
 def lerPrioridade(prioridade):
+    print("Lê prioridade", prioridade)
     Gui.ui.listItens.clear()
     Gui.ui.stackedWidget.setCurrentIndex(3)
     Gui.ui.labelPrioridade.setText(str(prioridade['itens'][0]["prioridade"]))
@@ -217,15 +216,15 @@ def lerItemEditar(item):
 
 
 def lerItemResultado(item):
+    print("Lê Resultado")
     avo = item.parent().row()
     if avo < 0:
+        print("Mês")
         selecionado = Resultado.Lista[item.row()]
-        print(selecionado)
     else:
         selecionado = Gui.ui.treeResultado.currentItem().text(0)
         find = Gui.ui.treeItens.findItems(selecionado, Qt.MatchContains | Qt.MatchRecursive, 0)
         for x in find:
-            print(x)
             Gui.ui.treeItens.setCurrentItem(x)
 
         # filho = item.row()
@@ -233,22 +232,26 @@ def lerItemResultado(item):
         # print("Filho",selecionado)
 
 def muda_mes():
+    print("Muda o mês")
     ArvoreResultado.Inicio=Gui.ui.comboMes.currentIndex()
     atualiza()
 
 def muda_limite():
+    print("Muda o limite")
     Lista.limite = str(Gui.ui.spinLimite.value())
     Lista.salva()
     atualiza()
-    print(Lista.limite)
+
 
 def instrucoes_padrao():
+    print("Seta instruções padrão")
     Gui.ui.labelInstrucoes.setText(
         "Instruções:\n" +
         "\tAdicione itens"
     )
 
 def instrucoes_alerta(meses):
+    print("Seta alerta")
     texto = ("Alerta:\n" +
         "\tGastos excessivos nos meses")
     for mes in meses:
@@ -256,8 +259,8 @@ def instrucoes_alerta(meses):
     Gui.ui.labelInstrucoes.setText(texto)
 
 def confere_limite():
+    print("Conferindo o limite")
     alerta = ArvoreResultado.alerta
-    print(alerta)
     if len(alerta) > 0:
         instrucoes_alerta(alerta)
         Gui.ui.stackedWidget.setCurrentIndex(0)
@@ -281,7 +284,7 @@ Gui.ui.buttonCancelar.clicked.connect(botao_adicionar_cancelar)
 Gui.ui.buttonDesfazer.clicked.connect(botao_desfazer)
 Gui.ui.buttonSalvar.clicked.connect(botao_salvar)
 Gui.ui.buttonPrioridadeSalvar.clicked.connect(botao_prioridade_salvar)
-
+Gui.ui.buttonGrafico.clicked.connect(botao_grafico)
 Gui.ui.buttonTempo.clicked.connect(botao_tempo)
 Gui.ui.buttonTempoPrioridade.clicked.connect(botao_tempoprioridade)
 
@@ -292,7 +295,7 @@ Gui.ui.buttonExcluir.clicked.connect(lambda: mensagem(
     janela=Gui.wExcluir
 ))
 
-
+Gui.uiGrafico.pushButton.clicked.connect(Gui.wGrafico.hide)
 Gui.uiOk.pushButton.clicked.connect(botao_ok)
 Gui.uiExcluir.buttonBox.rejected.connect(Gui.wExcluir.hide)
 Gui.uiExcluir.buttonBox.accepted.connect(botao_excluir)
@@ -323,6 +326,7 @@ ArvoreTempoPrioridade = ArvoreTempoBase(Gui.uiTempoPrioridade.listItens, Priorid
 Gui.uiTempoPrioridade.pushButton.clicked.connect(botao_tempoprioridade_ok)
 
 confere_limite()
+Gui.uiGrafico.widget.plot(ArvoreResultado.x, ArvoreResultado.y)
 
 sys.exit(Gui.app.exec_())
 
