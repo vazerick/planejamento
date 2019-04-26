@@ -52,7 +52,6 @@ def botao_tempoprioridade_ok():
         Lista.reduz_prioridade(id)
     Lista.salva()
     atualiza()
-    print(zero)
 
 
 def botao_adicionar():
