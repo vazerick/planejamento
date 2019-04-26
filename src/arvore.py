@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QTreeWidget, QTreeWidgetItem, QApplication, QWidget
+from PyQt5.QtCore import Qt
 
 
 
@@ -52,7 +53,93 @@ class ArvoreItens(Arvore):
 
         self.Widget.expandAll()
 
+
+class ArvoreTempoBase(Arvore):
+
+    def atualiza(self):
+
+        print("Arvore:")
+        self.Widget.clear()
+        for colecao in self.Itens.ordem:
+            linha = ["Prioridade " + str(colecao['itens'][0]['prioridade'])]
+            print("Espera:", self.ajeitaMes(colecao['espera']))
+            linha.append(self.ajeitaMes(int(colecao['espera'])))
+
+            WidgetItem = QTreeWidgetItem(linha)
+            WidgetItem.setFlags(WidgetItem.flags() | Qt.ItemIsTristate | Qt.ItemIsUserCheckable)
+            WidgetItem.setCheckState(0, Qt.Unchecked)
+
+            for item in colecao['itens']:
+                child = [
+                    item["nome"],
+                    "R$" + str(item["preco"]),
+                    str(item["prestacao"]) + "x"
+                ]
+                WidgetChild = QTreeWidgetItem(child)
+                WidgetChild.setFlags(WidgetChild.flags() | Qt.ItemIsTristate | Qt.ItemIsUserCheckable)
+                WidgetChild.setCheckState(0, Qt.Unchecked)
+                WidgetItem.addChild(WidgetChild)
+            self.Widget.addTopLevelItem(WidgetItem)
+
+        self.Widget.expandAll()
+
+        # root = self.Widget.invisibleRootItem()
+        # child_count = root.childCount()
+        # for i in range(child_count):
+        #     print(i)
+        #     item = root.child(i)
+        #     item.setFlags(item.flags() | Qt.ItemIsTristate | Qt.ItemIsUserCheckable)
+        #     item.setCheckState(0, Qt.Unchecked)
+        #     print(item)
+        #     child_count2 = item.childCount()
+        #     for z in range(child_count2):
+        #         child = item.child(z)
+        #         child.setFlags(child.flags() | Qt.ItemIsTristate | Qt.ItemIsUserCheckable)
+        #         child.setCheckState(0, Qt.Unchecked)
+
+    def ler(self):
+
+        selecionadas = []
+
+        raiz = self.Widget.invisibleRootItem()
+        cont_prior = raiz.childCount()
+
+        for i in range(cont_prior):
+            prioridade = raiz.child(i)
+            cont_item = prioridade.childCount()
+            print("Estado da prioridade:", prioridade.checkState(0))
+            if prioridade.checkState(0):
+                for z in range(cont_item):
+                    item = prioridade.child(z)
+                    print("Estado do item:", item.checkState(0))
+                    print("Teste:", i,"-",z)
+
+                    if item.checkState(0):
+                        selecionadas.append(
+                            {
+                                'prioridade': i,
+                                'item': z
+                            }
+                        )
+        return selecionadas
+
+
+# def getArvoreItem(item):
+#     pai = item.parent().row()
+#     if pai < 0:
+#         pai = item.row()
+#         selecionado = Prioridades.ordem[pai]
+#         lerPrioridade(selecionado)
+#     else:
+#         filho = item.row()
+#         selecionado = Prioridades.ordem[pai]['itens'][filho]
+#         print(selecionado)
+#         lerItemEditar(selecionado)
+
+
 class ArvoreResultado():
+
+    alerta = []
 
     def __init__(self, Widget, Itens, Limite, Inicio):
 
@@ -62,10 +149,14 @@ class ArvoreResultado():
         self.Itens = Itens
         self.Limite = Limite
         self.Inicio = Inicio
-        self.atualiza()
+        self.atualiza(Limite)
 
 
-    def atualiza(self):
+    def atualiza(self, Limite):
+
+        self.Limite = Limite
+
+        self.alerta = []
 
         prioridades = []
 
@@ -92,12 +183,9 @@ class ArvoreResultado():
                     prioridades.append(item[0]['prioridade'])
 
         for mes in range(0, len(self.Itens.Lista)):
-            mes_num = mes
+            mes_num = mes + self.Inicio
             while mes_num >= 12:
                 mes_num -= 12
-                print("Loop:", mes_num)
-            print(mes_num)
-            print(meses[mes_num])
             WidgetItem = QTreeWidgetItem([meses[mes_num]])
 
             soma_mes = 0
@@ -136,9 +224,11 @@ class ArvoreResultado():
                     WidgetItem.addChild(WidgetChild)
             WidgetItem.setText(1, self.dinheiro(soma_mes))
             WidgetItem.setText(2, self.percentual(soma_mes/float(self.Limite)))
+            if soma_mes > float(self.Limite):
+                self.alerta.append(meses[mes_num])
             self.Widget.addTopLevelItem(WidgetItem)
         self.Widget.expandAll()
-        print(self.Inicio)
+        print("Inicio:",self.Inicio)
 
     def dinheiro(self, num):
         return str("R${:.2f}".format(num))

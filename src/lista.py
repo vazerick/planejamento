@@ -121,6 +121,26 @@ class Lista:
                 print(item)
         self.salva()
 
+    def passa_tempo(self, id):
+        for item in self.lista:
+            if item['id'] == id:
+                if item['prestacao'] > 1:
+                    item['preco'] = round(
+                        item['preco'] - (item['preco'] / item['prestacao']),
+                        2
+                    )
+                    item['prestacao'] -= 1
+                else:
+                    self.lista.remove(item)
+
+    def reduz_prioridade(self, id):
+        for item in self.lista:
+            if item['id'] == id:
+                if item['prioridade'] > 1:
+                    item['prioridade'] -= 1
+                else:
+                    self.lista.remove(item)
+
 
     def salva(self):
         doc = minidom.Document()  # cria um objeto xml

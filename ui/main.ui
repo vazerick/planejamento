@@ -29,6 +29,9 @@
     <property name="styleSheet">
      <string notr="true"/>
     </property>
+    <property name="dragEnabled">
+     <bool>true</bool>
+    </property>
     <property name="alternatingRowColors">
      <bool>true</bool>
     </property>
@@ -86,7 +89,7 @@
      <enum>QFrame::Raised</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="pageInstrucoes">
      <widget class="QLabel" name="labelInstrucoes">
@@ -547,7 +550,7 @@ p, li { white-space: pre-wrap; }
       <x>50</x>
       <y>260</y>
       <width>80</width>
-      <height>25</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -797,6 +800,45 @@ p, li { white-space: pre-wrap; }
       </item>
      </item>
     </item>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>240</y>
+      <width>301</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Passar o mês</string>
+    </property>
+    <widget class="QPushButton" name="buttonTempo">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>24</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Prestação</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="buttonTempoPrioridade">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>24</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Prioridade</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

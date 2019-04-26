@@ -12,6 +12,7 @@ from PyQt5.QtCore import Qt, QDate
 from ui.main import Ui_MainWindow as Main
 from ui.excluir import Ui_Form as Excluir
 from ui.sucesso import Ui_Form as Ok
+from ui.tempo import Ui_Form as Tempo
 
 class gui:
 
@@ -25,8 +26,19 @@ class gui:
         self.ui = Main()
         self.ui.setupUi(self.wMain)
 
+
+        self.wTempo = QDialog()
+        self.uiTempo = Tempo()
+        self.uiTempo.setupUi(self.wTempo)
+
+        self.wTempoPrioridade = QDialog()
+        self.uiTempoPrioridade = Tempo()
+        self.uiTempoPrioridade.setupUi(self.wTempoPrioridade)
+
         self.ui.treeItens.setColumnWidth(0, 175)
         self.ui.treeResultado.setColumnWidth(0, 200)
+        self.uiTempo.listItens.setColumnWidth(0, 230)
+        self.uiTempoPrioridade.listItens.setColumnWidth(0, 230)
 
         self.wExcluir = QDialog()
         self.uiExcluir = Excluir()
@@ -50,7 +62,9 @@ class gui:
         for janela in [
             self.wMain,
             self.wExcluir,
-            self.wOk
+            self.wOk,
+            self.wTempo,
+            self.wTempoPrioridade
         ]:
             janela.setStyleSheet(tema)
             janela.setWindowModality(Qt.ApplicationModal)
