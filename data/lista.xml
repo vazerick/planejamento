@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<!--Criacao: Fri Apr 26 13:56:29 2019-->
+<!--Criacao: Wed May  1 19:27:40 2019-->
 <planejamento>
-   <limite>750.0</limite>
+   <limite>1000.0</limite>
    <prioridades>
       <prioridade num="1">
          <espera>0</espera>
@@ -9,11 +9,23 @@
       <prioridade num="2">
          <espera>0</espera>
       </prioridade>
+      <prioridade num="3">
+         <espera>0</espera>
+      </prioridade>
+      <prioridade num="4">
+         <espera>0</espera>
+      </prioridade>
       <prioridade num="5">
          <espera>0</espera>
       </prioridade>
-      <prioridade num="10">
-         <espera>3</espera>
+      <prioridade num="6">
+         <espera>0</espera>
+      </prioridade>
+      <prioridade num="7">
+         <espera>0</espera>
+      </prioridade>
+      <prioridade num="8">
+         <espera>9</espera>
       </prioridade>
    </prioridades>
    <lista>
@@ -49,7 +61,7 @@
          <nome>Dívidas</nome>
          <prioridade>1</prioridade>
          <preco>1268.4</preco>
-         <prestacao>6</prestacao>
+         <prestacao>4</prestacao>
          <comentario></comentario>
       </item>
       <item id="6">
@@ -145,16 +157,9 @@
       </item>
       <item id="21">
          <nome>Cama Baú</nome>
-         <prioridade>12</prioridade>
+         <prioridade>8</prioridade>
          <preco>1600.0</preco>
          <prestacao>12</prestacao>
-         <comentario></comentario>
-      </item>
-      <item id="22">
-         <nome>TV</nome>
-         <prioridade>12</prioridade>
-         <preco>1600.0</preco>
-         <prestacao>10</prestacao>
          <comentario></comentario>
       </item>
       <item id="23">
