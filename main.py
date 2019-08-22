@@ -14,8 +14,6 @@ from src.prioridade import Prioridade
 from src.arvore import ArvoreItens, ArvoreTempoBase, ArvoreResultado
 from src.resultado import Resultado
 
-os.chdir("/home/vazerick/PycharmProjects/planejamento")
-print("Diretório:", os.getcwd())
 
 def atualiza():
     print("Atualiza listas")
@@ -35,7 +33,7 @@ def botao_ok():
 
 
 def botao_tempo_ok():
-    selecionados = ArvoreTempoBase.ler()
+    selecionados = ArvoreTempo.ler()
     for item in selecionados:
         id = Prioridades.ordem[item['prioridade']]['itens'][item['item']]['id']
         Lista.passa_tempo(id)

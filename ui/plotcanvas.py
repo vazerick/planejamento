@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QSizePolicy
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
 
 
 
@@ -26,7 +27,7 @@ class PlotCanvas(FigureCanvas):
         ax.set_yticks([25,50,75,100], minor=False)
         ax.yaxis.grid(True, which='major', linewidth=2)
         ax.xaxis.grid(True, linestyle="--", linewidth=0.5)
-        ax.plot(x, y, 'rd-', linewidth=3)
+        ax.bar(x, y)
         print("\n\n\tDEBUG")
         for tick in ax.get_xticklabels():
             tick.set_rotation(45)
